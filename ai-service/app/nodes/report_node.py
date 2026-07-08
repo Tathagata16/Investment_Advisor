@@ -21,20 +21,34 @@ Financial Score:
 News Score:
 {state['news']['score']}
 
+Risk Assessment
+
+Risk Level:
+{state["risk"]["level"]}
+
 Risk Score:
-{state['risk']['score']}
+{state["risk"]["score"]}
+
+Risk Summary:
+{state["risk"]["summary"]}
 
 Write:
 
 1. Executive Summary
 
-2. Financial Analysis
+2. Company Overview
 
-3. News Analysis
+3. Financial Analysis
 
-4. Risk Analysis
+4. News Analysis
 
-5. Final Verdict
+5. Risk Assessment
+
+6. Opportunities
+
+7. Long-Term Outlook
+
+8. Final Recommendation
 
 Use markdown formatting.
 """

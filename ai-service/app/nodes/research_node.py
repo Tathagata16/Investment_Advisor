@@ -1,10 +1,31 @@
+from app.services.research_service import search_company
+
+
 def research_node(state):
 
-    company = state["company"]
+    results = search_company(state["company"])
+
+    research_text = ""
+
+    sources = []
+
+    for result in results:
+
+        research_text += f"""
+
+Title:
+{result["title"]}
+
+Content:
+{result["content"]}
+
+"""
+
+        sources.append(result["url"])
 
     state["research"] = {
-        "company": company,
-        "status": "Research completed"
+        "summary": research_text,
+        "sources": sources
     }
 
     return state

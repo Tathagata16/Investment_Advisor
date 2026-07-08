@@ -6,30 +6,109 @@ import re
 def decision_node(state):
 
     prompt = f"""
-You are a professional investment analyst.
+You are an experienced investment analyst.
+
+Your task is to analyze the company using the provided research, financial data, news analysis, and risk assessment.
 
 Company:
-{state['company']}
+{state["company"]}
 
 Investment Horizon:
-{state['investmentType']}
+{state["investmentType"]}
+
+==================================================
+COMPANY RESEARCH
+==================================================
+
+{state["research"]["summary"]}
+
+==================================================
+FINANCIAL INFORMATION
+==================================================
+
+Company Name:
+{state["financial"].get("companyName")}
+
+Current Price:
+{state["financial"].get("currentPrice")}
+
+Market Cap:
+{state["financial"].get("marketCap")}
+
+P/E Ratio:
+{state["financial"].get("peRatio")}
+
+EPS:
+{state["financial"].get("eps")}
+
+Revenue:
+{state["financial"].get("revenue")}
+
+Net Income:
+{state["financial"].get("netIncome")}
+
+Revenue Growth:
+{state["financial"].get("revenueGrowth")}
+
+Return on Equity (ROE):
+{state["financial"].get("roe")}
+
+Debt to Equity:
+{state["financial"].get("debtToEquity")}
+
+Current Ratio:
+{state["financial"].get("currentRatio")}
 
 Financial Score:
-{state['financial']['score']}
+{state["financial"].get("score")}
+
+==================================================
+NEWS ANALYSIS
+==================================================
+
+Summary:
+{state["news"]["summary"]}
+
+Sentiment:
+{state["news"]["sentiment"]}
 
 News Score:
-{state['news']['score']}
+{state["news"]["score"]}
+
+==================================================
+RISK ASSESSMENT
+==================================================
+
+Risk Level:
+{state["risk"]["level"]}
 
 Risk Score:
-{state['risk']['score']}
+{state["risk"]["score"]}
 
-Respond ONLY in valid JSON.
+Risk Summary:
+{state["risk"]["summary"]}
 
-Format:
+==================================================
+
+Based on ALL the above information:
+
+1. Evaluate the company's financial health.
+2. Consider recent news sentiment.
+3. Consider the business outlook from the research.
+4. Consider the overall investment risk.
+5. Provide ONE recommendation.
+
+The recommendation MUST be exactly one of:
+
+BUY
+HOLD
+SELL
+
+Return ONLY valid JSON.
 
 {{
-    "recommendation":"BUY",
-    "confidence":88
+  "recommendation": "BUY",
+  "confidence": 91
 }}
 """
 

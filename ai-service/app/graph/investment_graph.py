@@ -9,7 +9,6 @@ from app.nodes.risk_node import risk_node
 from app.nodes.decision_node import decision_node
 from app.nodes.report_node import report_node
 
-
 builder = StateGraph(InvestmentState)
 
 builder.add_node("research", research_node)
