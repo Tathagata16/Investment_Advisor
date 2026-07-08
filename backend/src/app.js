@@ -9,6 +9,7 @@ const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const analysisRoutes = require("./routes/analysis.routes");
+const companyRoutes = require("./routes/company.routes");
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/v1/health", healthRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/analysis", analysisRoutes);
+app.use("/api/v1/company", companyRoutes);
 
 
 //errors
