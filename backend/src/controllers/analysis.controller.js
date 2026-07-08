@@ -42,3 +42,40 @@ exports.createAnalysis = asyncHandler(async (req, res) => {
     analysis,
   });
 });
+
+exports.getHistory = asyncHandler(async (req, res) => {
+
+    const analyses = await Analysis.find({
+        user: req.user._id
+    })
+        .sort({ createdAt: -1 });
+
+    res.json({
+        success: true,
+        analyses
+    });
+
+});
+
+//for specific analysis
+exports.getAnalysisById = asyncHandler(async (req, res) => {
+  const analysis = await Analysis.findOne({
+    _id: req.params.id,
+    user: req.user._id,
+  });
+
+  if (!analysis) {
+    return res.status(404).json({
+      success: false,
+      message: "Analysis not found",
+    });
+  }
+
+  res.json({
+    success: true,
+    analysis,
+  });
+});
+
+
+

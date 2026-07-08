@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
+
+import { getHistory } from "../services/analysisService";
 import { analyzeCompany } from "../services/analysisService";
 import { AuthContext } from "../context/AuthContext";
 
@@ -18,6 +21,7 @@ export default function Dashboard() {
     };
 
     const [loading, setLoading] = useState(false);
+    const [history, setHistory] = useState([]);
 
     //analyze function
     const handleAnalyze = async ({
@@ -42,20 +46,38 @@ export default function Dashboard() {
 
             const analysis = await analyzeCompany(formData, token);
 
-            navigate("/analysis", {
-                state: {
-                    analysis: {
-                        ...analysis,
-                        company: companyName,
-                    },
-                },
-            });
+            navigate(`/analysis/${analysis._id}`);
         } catch (err) {
             alert(err.response?.data?.message || "Analysis failed.");
         } finally {
             setLoading(false);
         }
     };
+
+    //getting history function..
+    useEffect(() => {
+
+        const fetchHistory = async () => {
+
+            try {
+
+                const token = localStorage.getItem("token");
+
+                const data = await getHistory(token);
+
+                setHistory(data);
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        };
+
+        fetchHistory();
+
+    }, []);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -110,17 +132,19 @@ export default function Dashboard() {
 
                 <div className="grid md:grid-cols-3 gap-4">
 
-                    <HistoryCard
-                        company="Tesla"
-                        recommendation="BUY"
-                        confidence={92}
-                    />
+                    {
+                        history.map((analysis) => (
 
-                    <HistoryCard
-                        company="Apple"
-                        recommendation="HOLD"
-                        confidence={81}
-                    />
+                            <HistoryCard
+
+                                key={analysis._id}
+
+                                analysis={analysis}
+
+                            />
+
+                        ))
+                    }
 
                 </div>
 

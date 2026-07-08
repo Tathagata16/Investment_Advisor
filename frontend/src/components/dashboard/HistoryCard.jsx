@@ -1,19 +1,24 @@
-export default function HistoryCard({
-  company,
-  recommendation,
-  confidence,
-}) {
+import { useNavigate } from "react-router-dom";
+
+export default function HistoryCard({ analysis }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-white p-4 rounded shadow">
+    <div
+      onClick={() => navigate(`/analysis/${analysis._id}`)}
+      className="bg-white rounded shadow p-4 cursor-pointer hover:shadow-lg transition"
+    >
+      <h2 className="font-bold">
+        {analysis.company}
+      </h2>
 
-      <h3 className="font-bold">
-        {company}
-      </h3>
+      <p className="mt-2">
+        {analysis.recommendation}
+      </p>
 
-      <p>{recommendation}</p>
-
-      <p>{confidence}% Confidence</p>
-
+      <p>
+        Confidence {analysis.confidence}%
+      </p>
     </div>
   );
 }
