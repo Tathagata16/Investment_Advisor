@@ -8,6 +8,8 @@ const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
+const analysisRoutes = require("./routes/analysis.routes");
+
 
 const app = express();
 
@@ -23,6 +25,7 @@ app.use(cookieParser());
 app.use("/api/v1/health", healthRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/analysis", analysisRoutes);
 
 
 //errors
