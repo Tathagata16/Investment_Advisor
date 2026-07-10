@@ -1,7 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 import { getAnalysisById } from "../services/analysisService";
+import AnalysisHeader from "../components/analysis/AnalysisHeader";
+import OverviewCards from "../components/analysis/OverviewCards";
+import ScoreCards from "../components/analysis/ScoreCards";
+import GaugeSection from "../components/analysis/GaugeSection";
+import RecommendationCard from "../components/analysis/RecommendationCard";
+import DecisionPipeline from "../components/analysis/DecisionPipeline";
+import ReportSection from "../components/analysis/ReportSection";
 
 export default function Analysis() {
     const { id } = useParams();
@@ -24,75 +32,41 @@ export default function Analysis() {
     }, [id]);
 
     if (!analysis) {
-  return (
-    <div className="p-10">
-      Loading...
-    </div>
-  );
-}
+        return (
+            <div className="p-10">
+                Loading...
+            </div>
+        );
+    }
 
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
 
-            <div className="max-w-5xl mx-auto">
+            <div className="w-full max-w-375 mx-auto">
 
-                <h1 className="text-4xl font-bold">
-                    {analysis.company}
-                </h1>
+                <AnalysisHeader analysis={analysis} />
 
-                <p className="text-xl mt-2">
-                    Recommendation:
-                    <span className="font-bold ml-2">
-                        {analysis.recommendation}
-                    </span>
-                </p>
+                <OverviewCards analysis={analysis} />
 
-                <div className="grid grid-cols-3 gap-4 mt-8">
+                {/* <ScoreCards analysis={analysis} /> */}
 
-                    <div className="bg-white p-5 rounded shadow">
-                        <h3 className="font-semibold">
-                            Financial Score
-                        </h3>
+                <div className="grid grid-cols-12 gap-8 mt-8">
 
-                        <p className="text-3xl mt-2">
-                            {analysis.financialScore}
-                        </p>
+                    <div className="col-span-8">
+                        <GaugeSection analysis={analysis} />
                     </div>
 
-                    <div className="bg-white p-5 rounded shadow">
-                        <h3 className="font-semibold">
-                            News Score
-                        </h3>
-
-                        <p className="text-3xl mt-2">
-                            {analysis.newsScore}
-                        </p>
-                    </div>
-
-                    <div className="bg-white p-5 rounded shadow">
-                        <h3 className="font-semibold">
-                            Risk Score
-                        </h3>
-
-                        <p className="text-3xl mt-2">
-                            {analysis.riskScore}
-                        </p>
+                    <div className="col-span-4">
+                        <RecommendationCard analysis={analysis} />
                     </div>
 
                 </div>
+                <DecisionPipeline />
 
-                <div className="bg-white rounded shadow p-6 mt-8">
 
-                    <h2 className="text-2xl font-bold mb-4">
-                        AI Report
-                    </h2>
 
-                    <pre className="whitespace-pre-wrap font-sans">
-                        {analysis.report}
-                    </pre>
-
-                </div>
+                <ReportSection analysis={analysis} />
 
             </div>
 

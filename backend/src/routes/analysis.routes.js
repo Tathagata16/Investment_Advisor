@@ -10,6 +10,7 @@ const {
     createAnalysis,
     getHistory,
     getAnalysisById,
+    downloadPDF,
 } = require("../controllers/analysis.controller");
 
 
@@ -25,11 +26,17 @@ router.get(
     authMiddleware,
     getHistory
 );
+router.get(
+  "/:id/pdf",
+  authMiddleware,
+  downloadPDF
+);
 
 router.get(
   "/:id",
   authMiddleware,
   getAnalysisById
 );
+
 
 module.exports = router;

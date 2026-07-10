@@ -28,25 +28,23 @@ const analysisSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-
-    financialScore: {
-      type: Number,
-      default: 0,
-    },
-
-    newsScore: {
-      type: Number,
-      default: 0,
-    },
-
-    riskScore: {
-      type: Number,
-      default: 0,
-    },
-
     report: {
       type: String,
       default: "",
+    },
+    financial: {
+      type: Object,
+      default: {},
+    },
+
+    news: {
+      type: Object,
+      default: {},
+    },
+
+    risk: {
+      type: Object,
+      default: {},
     },
   },
   {

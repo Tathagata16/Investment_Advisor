@@ -1,5 +1,9 @@
 const asyncHandler = require("../middleware/asyncHandler");
 
+const {
+  generateAnalysisPDF,
+} = require("../services/pdf.service");
+
 const Analysis = require("../models/Analysis");
 
 const { analyzeCompany } = require("../services/ai.service");
@@ -28,11 +32,11 @@ exports.createAnalysis = asyncHandler(async (req, res) => {
 
     confidence: aiResponse.confidence,
 
-    financialScore: aiResponse.financialScore,
+    financial: aiResponse.financial,
 
-    newsScore: aiResponse.newsScore,
+    news: aiResponse.news,
 
-    riskScore: aiResponse.riskScore,
+    risk: aiResponse.risk,
 
     report: aiResponse.report,
   });
@@ -45,15 +49,15 @@ exports.createAnalysis = asyncHandler(async (req, res) => {
 
 exports.getHistory = asyncHandler(async (req, res) => {
 
-    const analyses = await Analysis.find({
-        user: req.user._id
-    })
-        .sort({ createdAt: -1 });
+  const analyses = await Analysis.find({
+    user: req.user._id
+  })
+    .sort({ createdAt: -1 });
 
-    res.json({
-        success: true,
-        analyses
-    });
+  res.json({
+    success: true,
+    analyses
+  });
 
 });
 
@@ -76,6 +80,26 @@ exports.getAnalysisById = asyncHandler(async (req, res) => {
     analysis,
   });
 });
+
+//pdf download controller
+exports.downloadPDF = asyncHandler(async (req, res) => {
+
+  const analysis = await Analysis.findOne({
+    _id: req.params.id,
+    user: req.user._id,
+  });
+
+  if (!analysis) {
+    return res.status(404).json({
+      success: false,
+      message: "Analysis not found",
+    });
+  }
+
+  generateAnalysisPDF(analysis, res);
+
+});
+
 
 
 

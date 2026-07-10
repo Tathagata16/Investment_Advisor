@@ -36,10 +36,18 @@ def analyze(request: AnalysisRequest):
     result = graph.invoke(state)
 
     return {
-        "recommendation": result["decision"]["recommendation"],
-        "confidence": result["decision"]["confidence"],
-        "financialScore": result["financial"]["score"],
-        "newsScore": result["news"]["score"],
-        "riskScore": result["risk"]["score"],
-        "report": result["report"]
-    }
+
+    "recommendation": result["decision"]["recommendation"],
+
+    "confidence": result["decision"]["confidence"],
+
+    "financial": result["financial"],
+
+    "news": result["news"],
+
+    "risk": result["risk"],
+
+    "report": result["report"]
+
+}
+    

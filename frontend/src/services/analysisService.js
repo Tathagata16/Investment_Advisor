@@ -37,3 +37,15 @@ export const getAnalysisById = async (id, token) => {
 
   return response.data.analysis;
 };
+
+
+export const downloadPDF = async (id, token) => {
+  const response = await api.get(`/analysis/${id}/pdf`, {
+    responseType: "blob",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
