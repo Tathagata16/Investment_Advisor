@@ -100,11 +100,11 @@ export default function SearchForm({onAnalyze}) {
 
             </div>
 
-            <div>
+            {/* <div>
 
-                <label className="block font-semibold mb-2">
+                {/* <label className="block font-semibold mb-2">
                     Upload Company PDF (Optional)
-                </label>
+                </label> 
 
                 <input
                     type="file"
@@ -112,7 +112,7 @@ export default function SearchForm({onAnalyze}) {
                     onChange={(e) => setFile(e.target.files[0])}
                 />
 
-            </div>
+            </div> */}
 
             <div>
 
