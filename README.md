@@ -27,6 +27,9 @@ access
 
 ------------------------------------------------------------------------
 
+# LLM chat used to build this project
+ link: https://chatgpt.com/share/6a53bc42-8094-83ee-aab0-d371e5e2f537
+
 # Features
 
 ## Authentication
