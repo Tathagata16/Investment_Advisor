@@ -1,5 +1,7 @@
 # AI Investment Research Agent
 # link: https://investment-advisor-lime.vercel.app/
+# link: https://chatgpt.com/share/6a53bf20-acd8-83e8-9a86-6f1fd2dd010b (debug)
+# link: https://chatgpt.com/share/6a53bf4a-7ce8-83ee-aced-4bd0ca6186e6
 
 > **AI-powered investment research platform built with MERN, FastAPI,
 > LangGraph and Google Gemini.**
