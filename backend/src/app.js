@@ -15,7 +15,8 @@ const companyRoutes = require("./routes/company.routes");
 const app = express();
 
 //middlewares
-app.use(cors());
+app.use(cors(
+));
 
 app.use(express.json());
 
