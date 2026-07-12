@@ -231,9 +231,6 @@ cd Investment_Advisor
 cd frontend
 npm install
 
-create a .env file:
-VITE_API_URL=http://localhost:5000/api/v1
-
 npm run dev
 ```
 
@@ -242,18 +239,6 @@ npm run dev
 ``` bash
 cd backend
 npm install
-
-create a .env
-PORT=5000
-
-MONGO_URI=<your-mongodb-uri>
-
-JWT_SECRET=<your-secret>
-
-CLIENT_URL=http://localhost:5173
-
-AI_SERVICE_URL=http://localhost:8000
-
 
 npm run dev
 ```
@@ -266,13 +251,6 @@ cd ai-service
 python -m venv venv
 
 pip install -r requirements.txt
-
-create a .env file:
-GEMINI_API_KEY=<your-api-key>
-
-NEWS_API_KEY=<your-api-key>
-
-TAVILY_API_KEY=<your-api-key>
 
 uvicorn main:app --reload
 ```
