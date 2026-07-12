@@ -1,498 +1,320 @@
-﻿# AI Investment Research Agent
+# AI Investment Research Agent
 
-An AI-powered investment research platform that analyzes publicly traded companies and generates explainable investment recommendations using Large Language Models (LLMs), LangGraph, and Retrieval-Augmented Generation (RAG).
+> **AI-powered investment research platform built with MERN, FastAPI,
+> LangGraph and Google Gemini.**
 
-Instead of acting as a simple chatbot, the application follows a structured research workflow that gathers company information, evaluates financial performance, analyzes recent news, assesses risks, and produces a detailed investment report with supporting reasoning.
+## Overview
 
----
+AI Investment Research Agent is a full-stack web application that
+analyzes publicly traded companies and generates explainable investment
+recommendations using an LLM-driven workflow.
 
-## Demo
+The project follows a **hybrid microservice architecture**:
 
-> Add deployed frontend URL
+-   **Frontend (React)** -- Dashboard, authentication, history, reports
+-   **Backend (Node.js/Express)** -- Authentication, MongoDB, REST APIs,
+    PDF generation
+-   **AI Service (FastAPI)** -- LangGraph orchestration, Gemini
+    reasoning, financial/news/risk analysis
 
-> Add backend API URL
+Instead of acting like a chatbot, the application follows a structured
+investment research pipeline that: 1. Researches the selected company 2.
+Retrieves financial information 3. Analyzes recent news sentiment 4.
+Performs risk assessment 5. Generates an explainable recommendation 6.
+Produces a detailed Markdown report 7. Stores the analysis for future
+access
 
----
+------------------------------------------------------------------------
 
-## Features
+# Features
 
-### Authentication
+## Authentication
 
-- User Signup/Login
-- JWT Authentication
-- Secure protected routes
+-   JWT Authentication
+-   User Signup & Login
+-   Protected Routes
+-   Persistent Login Session
 
-### Investment Research
+## Investment Analysis
 
-- Search any publicly traded company
-- Automatic company research
-- Financial statement analysis
-- Latest news analysis
-- Risk assessment
-- Long-term and Short-term investment recommendations
-- Confidence score
-- Detailed reasoning behind every decision
+-   Company autocomplete search
+-   Long-term and Short-term investment analysis
+-   Company research
+-   Financial analysis
+-   News sentiment analysis
+-   Risk assessment
+-   Explainable AI recommendation
+-   Confidence score
 
-### Explainable AI
+## Dashboard
 
-Every recommendation includes:
+-   Company overview
+-   Recommendation card
+-   Financial overview cards
+-   Semi-circular gauge charts
+-   Decision pipeline visualization
+-   Markdown AI report
+-   Analysis history
 
-- Company Overview
-- Financial Analysis
-- News Analysis
-- Risk Analysis
-- Investment Decision
-- Confidence Score
-- Detailed reasoning
-- Final investment report
+## Reports
 
-### RAG Support
+-   PDF report download
+-   Stored reports
+-   View previous analyses
 
-Users can optionally upload company-related documents such as:
-
-- Annual Reports
-- Earnings Reports
-- Investor Presentations
-- Financial PDFs
-
-The uploaded documents are indexed and used during analysis to provide more grounded responses.
-
-### History
-
-- Save previous analyses
-- View past reports
-- Download reports anytime
-
-### Report Export
-
-Generate downloadable PDF reports containing:
-
-- Company Summary
-- Financial Insights
-- News Summary
-- Risk Analysis
-- Final Recommendation
-- Decision Reasoning
-
----
+------------------------------------------------------------------------
 
 # Tech Stack
 
 ## Frontend
 
-- React
-- Tailwind CSS
-- React Router
-- Axios
+-   React
+-   Vite
+-   Tailwind CSS
+-   React Router
+-   Axios
+-   React Markdown
+-   React Gauge Component
+-   React Icons
 
 ## Backend
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
-- Multer
+-   Node.js
+-   Express.js
+-   MongoDB Atlas
+-   Mongoose
+-   JWT
+-   Multer
+-   PDFKit
 
 ## AI Service
 
-- Python
-- FastAPI
-- LangChain
-- LangGraph
-- Google Gemini
-- FAISS (Vector Store)
-- PyPDF
+-   FastAPI
+-   LangChain
+-   LangGraph
+-   Google Gemini
+-   Tavily Search
+-   Yahoo Finance
+-   News API
 
-## External APIs
-
-- Gemini API
-- Financial Data API(Yahoo Finance)
-- News API
-- Web Search API
-
----
+------------------------------------------------------------------------
 
 # System Architecture
 
-```
-                    React Frontend
-                           │
-                           ▼
-                  Express Backend
-                           │
-        ┌──────────────────┴──────────────────┐
-        │                                     │
-   MongoDB                            Python AI Service
-                                           │
-                                    LangGraph Workflow
-                                           │
-                                      Gemini + RAG
+``` text
+                 React (Vercel)
+                        │
+                        ▼
+            Express Backend (Railway)
+                        │
+        ┌───────────────┴───────────────┐
+        │                               │
+ MongoDB Atlas                 FastAPI AI Service
+                                       │
+                                LangGraph Workflow
+                                       │
+        Yahoo Finance • News API • Tavily Search
+                                       │
+                                 Google Gemini
 ```
 
----
+------------------------------------------------------------------------
 
 # LangGraph Workflow
 
-The AI pipeline follows a sequential workflow.
-
-```
+``` text
 START
-
-↓
-
-Research
-
-↓
-
+  │
+  ▼
+Company Research
+  │
+  ▼
 Financial Analysis
-
-↓
-
+  │
+  ▼
 News Analysis
-
-↓
-
-Risk Analysis
-
-↓
-
-Decision
-
-↓
-
+  │
+  ▼
+Risk Assessment
+  │
+  ▼
+Investment Decision
+  │
+  ▼
 Report Generation
-
-↓
-
+  │
+  ▼
 END
 ```
 
-Each stage enriches a shared application state before passing it to the next stage.
+------------------------------------------------------------------------
 
----
+# Dashboard
 
-# AI Workflow
+-   Company overview
+-   Current price
+-   Market cap
+-   P/E ratio
+-   EPS
+-   Recommendation card
+-   Gauge metrics
+-   Decision pipeline
+-   Expandable markdown report
+-   PDF download
 
-## 1. Research
-
-Collects
-
-- Company profile
-- Industry
-- Business overview
-- Market information
-
-↓
-
-## 2. Financial Analysis
-
-Analyzes
-
-- Revenue
-- Profitability
-- Growth
-- Debt
-- Valuation
-- Financial health
-
-↓
-
-## 3. News Analysis
-
-Analyzes
-
-- Recent company news
-- Market sentiment
-- Opportunities
-- Negative events
-
-↓
-
-## 4. Risk Assessment
-
-Evaluates
-
-- Financial risks
-- Business risks
-- Industry risks
-- Macroeconomic risks
-
-↓
-
-## 5. Decision
-
-Produces
-
-- Buy / Hold / Pass
-- Confidence score
-- Long-term recommendation
-- Short-term recommendation
-- Supporting reasoning
-
-↓
-
-## 6. Report Generation
-
-Creates a structured investment report returned to the frontend and exported as PDF.
-
----
-
-# RAG Pipeline
-
-```
-Uploaded PDF
-
-↓
-
-Document Loader
-
-↓
-
-Chunking
-
-↓
-
-Embeddings
-
-↓
-
-FAISS Vector Store
-
-↓
-
-Relevant Chunks Retrieved
-
-↓
-
-Gemini
-
-↓
-
-Final Analysis
-```
-
-Uploaded documents are used as additional context during company analysis.
-
----
+------------------------------------------------------------------------
 
 # Folder Structure
 
-```
-project-root/
+``` text
+investment-advisor/
 
-│
-├── client/
+├── frontend/
 │   ├── src/
 │   ├── components/
 │   ├── pages/
 │   ├── services/
-│   └── hooks/
 │
-├── server/
+├── backend/
 │   ├── controllers/
-│   ├── routes/
 │   ├── middleware/
 │   ├── models/
+│   ├── routes/
 │   ├── services/
-│   ├── utils/
-│   └── uploads/
 │
-├── ai-service/
-│   ├── app/
-│   │   ├── graph/
-│   │   ├── nodes/
-│   │   ├── prompts/
-│   │   ├── rag/
-│   │   ├── loaders/
-│   │   ├── utils/
-│   │   └── main.py
-│   │
-│   └── requirements.txt
-│
-└── README.md
+└── ai-service/
+    ├── app/
+    │   ├── graph/
+    │   ├── nodes/
+    │   ├── prompts/
+    │   └── services/
+    ├── state.py
+    ├── main.py
+    └── requirements.txt
 ```
 
----
+------------------------------------------------------------------------
 
-# API Endpoints
+# REST API
 
 ## Authentication
 
-```
-POST /api/auth/signup
+    POST /api/v1/auth/signup
+    POST /api/v1/auth/login
 
-POST /api/auth/login
-```
+## User
+
+    GET /api/v1/user/profile
+
+## Companies
+
+    GET /api/v1/company/search
 
 ## Analysis
 
-```
-POST /api/analysis
+    POST /api/v1/analysis
+    GET  /api/v1/analysis/history
+    GET  /api/v1/analysis/:id
+    GET  /api/v1/analysis/:id/pdf
 
-GET /api/analysis/history
+------------------------------------------------------------------------
 
-GET /api/analysis/:id
-```
-
-## Documents
-
-```
-POST /api/upload
-
-DELETE /api/upload/:id
-```
-
----
-
-# How to Run
-
-## Clone Repository
-
-```
-git clone <repo-url>
-```
-
----
+# Local Setup
 
 ## Frontend
 
-```
-cd client
-
+``` bash
+cd frontend
 npm install
-
 npm run dev
 ```
-
----
 
 ## Backend
 
-```
-cd server
-
+``` bash
+cd backend
 npm install
-
 npm run dev
 ```
 
----
-
 ## AI Service
 
-```
+``` bash
 cd ai-service
 
 python -m venv venv
 
 pip install -r requirements.txt
 
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 
----
+------------------------------------------------------------------------
 
-## Environment Variables
+# Environment Variables
 
-### Frontend
+## Frontend
 
-```
+``` env
 VITE_API_URL=
 ```
 
-### Backend
+## Backend
 
-```
+``` env
 PORT=
-
-MONGODB_URI=
-
+MONGO_URI=
 JWT_SECRET=
-
-PYTHON_SERVICE_URL=
+CLIENT_URL=
+AI_SERVICE_URL=
 ```
 
-### AI Service
+## AI Service
 
-```
+``` env
 GEMINI_API_KEY=
-
-FINANCIAL_API_KEY=
-
 NEWS_API_KEY=
+TAVILY_API_KEY=
 ```
 
----
+------------------------------------------------------------------------
 
-# Example Workflow
+# Deployment
 
-```
-User enters company name
+-   Frontend → Vercel
+-   Backend → Railway
+-   AI Service → Railway
+-   Database → MongoDB Atlas
 
-↓
-
-System researches company
-
-↓
-
-Financial analysis
-
-↓
-
-News analysis
-
-↓
-
-Risk assessment
-
-↓
-
-Investment decision
-
-↓
-
-Detailed report
-
-↓
-
-Save to database
-
-↓
-
-Display to user
-
-↓
-
-Optional PDF download
-```
-
----
+------------------------------------------------------------------------
 
 # Future Improvements
 
-- Parallel LangGraph execution
-- Live stock price visualization
-- Portfolio tracking
-- Company comparison
-- Watchlist
-- Multi-agent architecture
-- Additional financial data providers
-- More advanced RAG with automated annual report retrieval
-- Streaming LLM responses
-- Caching for repeated analyses
+-   Document-based RAG (currently on hold)
+-   Parallel LangGraph execution
+-   Live execution pipeline
+-   Streaming LLM responses
+-   Company comparison
+-   Portfolio tracking
+-   Watchlist
+-   Dark mode
+-   Interactive financial charts
 
----
+------------------------------------------------------------------------
 
-# Design Decisions & Trade-offs
+# Design Decisions
 
-- **Hybrid Architecture:** Node.js is used for authentication, APIs, and persistence, while Python handles AI orchestration with LangChain and LangGraph. This leverages the strengths of both ecosystems.
-- **Sequential Workflow:** Financial and News Analysis are executed sequentially to keep the graph simpler and easier to debug while maintaining a clear reasoning pipeline.
-- **Explainability First:** The application exposes intermediate reasoning stages instead of returning only a final recommendation.
-- **Optional RAG:** Users can enhance analysis by uploading company-related documents, but the core workflow remains functional without uploaded files.
+-   Hybrid Node.js + Python architecture
+-   Separate AI microservice
+-   Sequential LangGraph workflow for maintainability
+-   Explainable AI outputs
+-   Persistent analysis history
+-   Server-side PDF generation
 
----
+------------------------------------------------------------------------
 
 # Disclaimer
 
-This application is intended for educational and research purposes only. It does **not** constitute financial advice or investment recommendations. Users should perform their own due diligence before making investment decisions.
+This project is intended for educational and demonstration purposes
+only. It does not constitute financial advice. Always perform
+independent research before making investment decisions.
